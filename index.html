@@ -18,12 +18,14 @@
 
         <label for="month-select">Choose a month:</label>
         <select name="months" id="month-select">
-        <option value="Default">Default</option>
-        <option value="January">January</option>
-        <option value="February">February</option>
-        <option value="March">March</option>
-        <option value="April">April</option>
+        
+        <option value="01">January</option>
+        <option value="02">February</option>
+        <option value="03">March</option>
+        <option value="04">April</option>
+        <option value="All">All</option>
         </select>
+        <button id = "btnReset" type = "button">Reset</button>
     </nav>
     <div id="card-container">
         
@@ -47,12 +49,7 @@
 
     </div> 
     <div class="footer">
-        <button onclick="quoteAlert();">
-            Get A Quote!
-        </button>
-        <button onclick="removeLastCard();">
-            Remove A Card!
-        </button>
+      
     </div>
 </body>
 

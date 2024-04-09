@@ -29,8 +29,6 @@ import { dataArray } from "./NasaData.js";
 
 
 // This function adds cards to the page to display the data in the array
-// I slightly modified showcards to take in specific arrays to make it more flexible
-// and available for filtering
 function showCards() {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
@@ -48,10 +46,15 @@ function showCards() {
         
         //get date
         let photoDate = dataArray[i].date;
-
+        
+        //we can implement filtering here using select menu and comparing to date
+        let monthValue = document.getElementById("month-select").value;
+        let month = photoDate.slice(5,7);
+        if ((monthValue == "All") || (month == monthValue)){
         const nextCard = templateCard.cloneNode(true); // Copy the template card
         editCardContent(nextCard, title, imageURL, i, photoDate); // Edit title and image
         cardContainer.appendChild(nextCard); // Add new card to the container
+        }
     }
 }
 
@@ -86,24 +89,17 @@ function editCardContent(card, newTitle, newImageURL, index, newDate) {
 }
 
 // This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", showCards);
+document.addEventListener("DOMContentLoaded", showCards());
 
 //event listener on navbar button
 document.getElementById("btnGetImage").addEventListener("click", showSingleCard);
 
 //event listener on select menu
-document.getElementById("month-select").addEventListener("change", showFiltered);
+document.getElementById("month-select").addEventListener("click", showCards);
 
-// show images filtered by the month
-function showFiltered(){
-    //5 cases 
-    const userSelection = document.getElementById("month-select");
-    if (userSelection == "All"){
-        showCards;
-    } else if (userSelection == "January"){
+//event listener on reset buttton
+document.getElementById("btnReset").addEventListener("click", showCards);
 
-    }
-}
 //this will retrieve and display the image for the day the user searches for
 function showSingleCard(){
     const input = document.getElementById("dateSearch");
@@ -168,12 +164,3 @@ function editLargeCardContent(card, newTitle, newImageURL, index, newDate, newEx
 
 
 
-function quoteAlert() {
-    console.log("Button Clicked!")
-    alert("I guess I can kiss heaven goodbye, because it got to be a sin to look this good!");
-}
-
-function removeLastCard() {
-    titles.pop(); // Remove last item in titles array
-    showCards(); // Call showCards again to refresh
-}
