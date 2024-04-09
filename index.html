@@ -2,30 +2,50 @@
 <html>
 
 <head>
-    <title>LA TV Shows | Home</title>
-    <meta name="description" content="A Catalog of Shows Set in Los Angeles">
+    <title>NASA APOD</title>
+    <meta name="description" content="A Catalog of NASA photos">
     <link rel="stylesheet" href="style.css" />
-    <script type="text/javascript" src="scripts.js"></script>
+    <script type="module" src="scripts.js"></script>
+    <script src = "NasaData.js"></script>
 </head>
-
 <body>
     <header class="main-header">
-        <h1 class="title">LA TV Shows</h1>
+        <h1 class="title">NASA Photo of the Day</h1>
     </header>
+    <nav id = "navbar">
+        <input type = "date" id = "dateSearch" name = "" value = "" min = "2024-01-01" max = "2024-04-08">
+        <button id = "btnGetImage" type = "button">Get Image</button>
+
+        <label for="month-select">Choose a month:</label>
+        <select name="months" id="month-select">
+        <option value="Default">Default</option>
+        <option value="January">January</option>
+        <option value="February">February</option>
+        <option value="March">March</option>
+        <option value="April">April</option>
+        </select>
+    </nav>
     <div id="card-container">
         
     </div>
     <div class="card" style="display: none;">
         <div class="card-content">
-            <h2>TV Show Title</h2>
-            <img src="" alt="TV Show Poster">
-            <ul>
-                <li>Bullet Point 1</li>
-                <li>Bullet Point 2</li>
-                <li>Bullet Point 3</li>
-            </ul>
+            <h2>Image Title</h2>
+            <img src="" alt="NASA Space Image">
+            <iframe src = "" style = "display:none"></iframe>
+            <p class = "date"></p>
         </div>
     </div>
+    <div class = "large-card" style = "display: none;">
+        <div class = "large-card-content">
+            <h2>Image Title</h2>
+            <img src="" alt="NASA Space Image">
+            <iframe src = "" style = "display:none"></iframe>
+            <p class = "date"></p>
+            <p class = "explanation"></p>
+        </div>
+
+    </div> 
     <div class="footer">
         <button onclick="quoteAlert();">
             Get A Quote!

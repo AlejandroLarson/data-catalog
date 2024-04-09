@@ -22,57 +22,62 @@
  *    with the string you added to the array, but a broken image.
  * 
  */
+// Imported Array full of Nasa Data from APOD API.  I grabbed data from 2024-01-01 to 2024-04-08
+// and put it in a javascript file in the local folder.  The data is primarily about NASA's
+// image for the day and includes a title, date, and more information.
+import { dataArray } from "./NasaData.js";
 
 
-const FRESH_PRINCE_URL = "https://upload.wikimedia.org/wikipedia/en/3/33/Fresh_Prince_S1_DVD.jpg";
-const CURB_POSTER_URL = "https://m.media-amazon.com/images/M/MV5BZDY1ZGM4OGItMWMyNS00MDAyLWE2Y2MtZTFhMTU0MGI5ZDFlXkEyXkFqcGdeQXVyMDc5ODIzMw@@._V1_FMjpg_UX1000_.jpg";
-const EAST_LOS_HIGH_POSTER_URL = "https://static.wikia.nocookie.net/hulu/images/6/64/East_Los_High.jpg";
-
-// This is an array of strings (TV show titles)
-let titles = [
-    "Fresh Prince of Bel Air",
-    "Curb Your Enthusiasm",
-    "East Los High"
-];
-// Your final submission should have much more data than this, and 
-// you should use more than just an array of strings to store it all.
-
-
-// This function adds cards the page to display the data in the array
+// This function adds cards to the page to display the data in the array
+// I slightly modified showcards to take in specific arrays to make it more flexible
+// and available for filtering
 function showCards() {
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
     const templateCard = document.querySelector(".card");
     
-    for (let i = 0; i < titles.length; i++) {
-        let title = titles[i];
 
-        // This part of the code doesn't scale very well! After you add your
-        // own data, you'll need to do something totally different here.
+    for (let i = 0; i < dataArray.length; i++) {
+
+        //get title
+        let title = dataArray[i].title;
+
+        //get image url
         let imageURL = "";
-        if (i == 0) {
-            imageURL = FRESH_PRINCE_URL;
-        } else if (i == 1) {
-            imageURL = CURB_POSTER_URL;
-        } else if (i == 2) {
-            imageURL = EAST_LOS_HIGH_POSTER_URL;
-        }
+        imageURL += dataArray[i].url;
+        
+        //get date
+        let photoDate = dataArray[i].date;
 
         const nextCard = templateCard.cloneNode(true); // Copy the template card
-        editCardContent(nextCard, title, imageURL); // Edit title and image
+        editCardContent(nextCard, title, imageURL, i, photoDate); // Edit title and image
         cardContainer.appendChild(nextCard); // Add new card to the container
     }
 }
 
-function editCardContent(card, newTitle, newImageURL) {
+//After copying a template card we need to edit its attributes
+function editCardContent(card, newTitle, newImageURL, index, newDate) {
     card.style.display = "block";
 
     const cardHeader = card.querySelector("h2");
     cardHeader.textContent = newTitle;
 
+    // Some of the images shared by Nasa are Youtube videos.  we have to account for that.
+    if (dataArray[index].media_type == "image"){
     const cardImage = card.querySelector("img");
     cardImage.src = newImageURL;
     cardImage.alt = newTitle + " Poster";
+    } else {
+        const cardImage = card.querySelector("img");
+        cardImage.style.display = "none";
+        const cardIframe = card.querySelector("iframe");
+        cardIframe.style.display = "block";
+        cardIframe.src = newImageURL;
+        cardIframe.alt = newTitle + "video";
+    }
+
+    const cardP = card.querySelector("p");
+    cardP.textContent = newDate;
 
     // You can use console.log to help you debug!
     // View the output by right clicking on your website,
@@ -82,6 +87,86 @@ function editCardContent(card, newTitle, newImageURL) {
 
 // This calls the addCards() function when the page is first loaded
 document.addEventListener("DOMContentLoaded", showCards);
+
+//event listener on navbar button
+document.getElementById("btnGetImage").addEventListener("click", showSingleCard);
+
+//event listener on select menu
+document.getElementById("month-select").addEventListener("change", showFiltered);
+
+// show images filtered by the month
+function showFiltered(){
+    //5 cases 
+    const userSelection = document.getElementById("month-select");
+    if (userSelection == "All"){
+        showCards;
+    } else if (userSelection == "January"){
+
+    }
+}
+//this will retrieve and display the image for the day the user searches for
+function showSingleCard(){
+    const input = document.getElementById("dateSearch");
+    const inputValue = input.value;
+
+    //search through array for this date (min and max are declared for dateSearch so I know input is valid)
+    const foundIndex = dataArray.findIndex((element) => element.date == inputValue);
+    
+    
+
+    //get title
+    let title = dataArray[foundIndex].title;
+
+    //get image url
+    let imageURL = "";
+    imageURL += dataArray[foundIndex].url;
+    
+    //get date
+    let photoDate = dataArray[foundIndex].date;
+
+    //get detailed information
+    let details = dataArray[foundIndex].explanation;
+
+    const cardContainer = document.getElementById("card-container");
+    cardContainer.innerHTML = "";
+    const templateCard = document.querySelector(".large-card");
+    
+    const nextCard = templateCard.cloneNode(true); // Copy the template card
+    editLargeCardContent(nextCard, title, imageURL, foundIndex, photoDate,details); // Edit title and image
+    cardContainer.appendChild(nextCard); // Add new card to the container
+
+}
+
+// this will edit the larger card template
+function editLargeCardContent(card, newTitle, newImageURL, index, newDate, newExplanation){
+    card.style.display = "block";
+
+    const cardHeader = card.querySelector("h2");
+    cardHeader.textContent = newTitle;
+
+    // Some of the images shared by Nasa are Youtube videos.  we have to account for that.
+    if (dataArray[index].media_type == "image"){
+    const cardImage = card.querySelector("img");
+    cardImage.src = newImageURL;
+    cardImage.alt = newTitle + " Poster";
+    } else {
+        const cardImage = card.querySelector("img");
+        cardImage.style.display = "none";
+        const cardIframe = card.querySelector("iframe");
+        cardIframe.style.display = "block";
+        cardIframe.src = newImageURL;
+        cardIframe.alt = newTitle + "video";
+    }
+
+    const cardP = card.querySelector(".date");
+    cardP.textContent = newDate;
+
+    const cardPExplanation = card.querySelector(".explanation");
+    cardPExplanation.textContent = newExplanation;
+
+}
+
+
 
 function quoteAlert() {
     console.log("Button Clicked!")

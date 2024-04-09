@@ -12,7 +12,7 @@ body {
 .title {
     text-align: center;
     margin: 0;
-    font-size: 8em;
+    font-size: 7em;
     font-family: "Helvetica";
     font-weight: normal;
     color: white;
@@ -20,6 +20,7 @@ body {
 
 #card-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     margin: 20px;
 }
@@ -67,4 +68,13 @@ button {
     font-size: 22px;
     cursor: pointer;
     margin: 5px;
+}
+
+iframe{
+    width: 100%;
+    height: auto;
+}
+
+p{
+    text-align: center;
 }
