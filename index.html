@@ -10,13 +10,14 @@
 </head>
 <body>
     <header class="main-header">
+        <img src = "nasa-logo.svg" alt = "nasa logo">
         <h1 class="title">NASA Photo of the Day</h1>
     </header>
     <nav id = "navbar">
         <input type = "date" id = "dateSearch" name = "" value = "" min = "2024-01-01" max = "2024-04-08">
         <button id = "btnGetImage" type = "button">Get Image</button>
-
-        <label for="month-select">Choose a month:</label>
+        <button id = "btnReset" type = "button">Reset</button>
+        <label for="month-select">Filter by month:</label>
         <select name="months" id="month-select">
         
         <option value="01">January</option>
@@ -25,7 +26,7 @@
         <option value="04">April</option>
         <option value="All">All</option>
         </select>
-        <button id = "btnReset" type = "button">Reset</button>
+        
     </nav>
     <div id="card-container">
         
@@ -33,18 +34,20 @@
     <div class="card" data-index= "" style="display: none;">
         <div class="card-content" >
             <h2>Image Title</h2>
+            <p class = "date"></p>
             <img src="" alt="NASA Space Image">
             <iframe src = "" style = "display:none"></iframe>
-            <p class = "date"></p>
+            
             <button class = "btnDetails" type = "button">Details</button>
         </div>
     </div>
     <div class = "large-card" style = "display: none;">
         <div class = "large-card-content">
             <h2>Image Title</h2>
+            <p class = "date"></p>
             <img src="" alt="NASA Space Image">
             <iframe src = "" style = "display:none"></iframe>
-            <p class = "date"></p>
+            
             <p class = "explanation"></p>
         </div>
 

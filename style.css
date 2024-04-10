@@ -1,19 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 html,
 body {
     margin: 0;
     padding: 0;
+    background-color: #222222;
 }
 
 .main-header {
-    background-color: rgba(0, 0, 0, .3);
+    display: flex;
+    justify-content: center;
     padding-bottom: 10px;
+    background-color: #000;
+}
+
+#navbar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    
+    border-top: 2px solid grey;
+    border-bottom: 2px solid grey;
+}
+
+#navbar label{
+    color: white;
 }
 
 .title {
     text-align: center;
     margin: 0;
     font-size: 7em;
-    font-family: "Helvetica";
+    font-family: "Space Mono",monospace, sans-serif;
     font-weight: normal;
     color: white;
 }
@@ -31,12 +51,58 @@ body {
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 5px;
+    background-color: white;
 }
 
 .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
     padding: 20px;
     font-family: "Verdana";
-    color: #777;
+    /* color: #777; */
+}
+
+.card-content .btnDetails {
+    
+}
+
+.large-card-content{
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.large-card-content h2{
+    text-align: center;
+    font-size: 2.5rem;
+
+}
+
+.large-card-content .date {
+    font-size: 1.5rem;
+}
+
+.large-card-content img{
+    max-width: 1000px;
+    max-height: 90vh;
+}
+
+.large-card-content iframe{
+    height: 315px;
+    width: 560px;
+}
+
+.explanation{
+    max-width: 1000px;
+    
+    font-size: 2rem;
+    line-height: 2.5rem;
+    padding: 1rem 2.5rem;
+    text-align: left;
+    margin: 1rem 2rem;
 }
 
 .card-content h2 {
@@ -46,14 +112,18 @@ body {
 
 .card img {
     width: 100%;
-    height: auto;
+    height: 25vh;
+    object-fit: cover;
 }
 
 .footer {
     display: flex;
     justify-content: center;
     background-color: rgba(0, 0, 0, .3);
-    padding: 10px;
+}
+
+.btnDetails{
+
 }
 
 button {
