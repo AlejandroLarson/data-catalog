@@ -51,11 +51,23 @@ function showCards() {
         let monthValue = document.getElementById("month-select").value;
         let month = photoDate.slice(5,7);
         if ((monthValue == "All") || (month == monthValue)){
-        const nextCard = templateCard.cloneNode(true); // Copy the template card
-        editCardContent(nextCard, title, imageURL, i, photoDate); // Edit title and image
-        cardContainer.appendChild(nextCard); // Add new card to the container
+            const nextCard = templateCard.cloneNode(true); // Copy the template card
+            editCardContent(nextCard, title, imageURL, i, photoDate); // Edit title and image
+            cardContainer.appendChild(nextCard); // Add new card to the container
         }
     }
+
+    // After we have populated the cards on the page, we need to add event listener for the details button
+    // we want to trigger the function that displays one large card
+    const detailsBtnList = document.querySelectorAll(".btnDetails");
+    detailsBtnList.forEach(function(btn) {
+        btn.addEventListener('click', function(){
+            //we pass index to the function
+            const thisIndex = btn.parentElement.parentElement.dataset.index;
+            showSingleCard(thisIndex);
+        });
+    });
+
 }
 
 //After copying a template card we need to edit its attributes
@@ -82,6 +94,10 @@ function editCardContent(card, newTitle, newImageURL, index, newDate) {
     const cardP = card.querySelector("p");
     cardP.textContent = newDate;
 
+    //I would like to stash the index in this property of the card so I can refer to it later
+    card.dataset.index = index;
+
+
     // You can use console.log to help you debug!
     // View the output by right clicking on your website,
     // select "Inspect", then click on the "Console" tab
@@ -89,7 +105,7 @@ function editCardContent(card, newTitle, newImageURL, index, newDate) {
 }
 
 // This calls the addCards() function when the page is first loaded
-document.addEventListener("DOMContentLoaded", showCards());
+document.addEventListener("DOMContentLoaded", showCards);
 
 //event listener on navbar button
 document.getElementById("btnGetImage").addEventListener("click", showSingleCard);
@@ -100,14 +116,23 @@ document.getElementById("month-select").addEventListener("click", showCards);
 //event listener on reset buttton
 document.getElementById("btnReset").addEventListener("click", showCards);
 
-//this will retrieve and display the image for the day the user searches for
-function showSingleCard(){
-    const input = document.getElementById("dateSearch");
-    const inputValue = input.value;
+//this will display a single large image with details for the requested image
+function showSingleCard(index){
 
-    //search through array for this date (min and max are declared for dateSearch so I know input is valid)
-    const foundIndex = dataArray.findIndex((element) => element.date == inputValue);
-    
+    let foundIndex = 0;
+
+    //case where index is provided
+    if(!isNaN(arguments[0])){
+        foundIndex = index;
+        
+        //case where we are searching
+    } else{
+        const input = document.getElementById("dateSearch");
+        const inputValue = input.value;
+
+        //search through array for this date (min and max are declared for dateSearch so I know input is valid)
+        foundIndex = dataArray.findIndex((element) => element.date == inputValue);
+    }
     
 
     //get title
@@ -132,6 +157,7 @@ function showSingleCard(){
     cardContainer.appendChild(nextCard); // Add new card to the container
 
 }
+
 
 // this will edit the larger card template
 function editLargeCardContent(card, newTitle, newImageURL, index, newDate, newExplanation){
