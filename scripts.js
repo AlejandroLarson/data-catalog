@@ -22,9 +22,16 @@
  *    with the string you added to the array, but a broken image.
  * 
  */
-// Imported Array full of Nasa Data from APOD API.  I grabbed data from 2024-01-01 to 2024-04-08
-// and put it in a javascript file in the local folder.  The data is primarily about NASA's
-// image for the day and includes a title, date, and more information.
+
+/* 
+
+I imported an array full of Nasa Data from APOD API. Separately I grabbed data 
+from 2024-01-01 to 2024-04-08 and put it in a javascript file in the local folder.  
+The data is primarily about NASA's image for the day and includes a title, date, 
+and more information. 
+
+*/
+
 import { dataArray } from "./NasaData.js";
 
 
